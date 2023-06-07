@@ -30,6 +30,8 @@ from tframe import Predictor
 from tframe.configs.config_base import Config
 import eeg_du as du
 from tframe import DataSet
+import eeg.eeg_proc as ep
+from eeg.optimizer import Optimizer
 
 
 # -----------------------------------------------------------------------------
@@ -55,6 +57,12 @@ th.size = 46200
 # -----------------------------------------------------------------------------
 # Set common trainer configs
 # -----------------------------------------------------------------------------
+
+## Loss Optimizer
+th.loss_prop = 11.0
+optimizer = Optimizer(th.loss_prop)
+# th.validate_cycle = 20
+#
 th.num_steps = -1
 th.print_cycle = 5
 th.sample_num = 2
@@ -80,6 +88,8 @@ th.eval_batch_size = 20
 
 
 def activate():
+  from eeg.eeg_agent import EEG
+
   # This line must be put in activate
   assert callable(th.model)
   if 'rnn' in th.developer_code:

@@ -30,6 +30,8 @@ from tframe import Predictor
 from tframe.configs.config_base import Config
 import eeg_du as du
 from tframe import DataSet
+import eeg.eeg_proc as ep
+from eeg.optimizer import Optimizer
 
 
 # -----------------------------------------------------------------------------
@@ -55,6 +57,12 @@ th.size = 46200
 # -----------------------------------------------------------------------------
 # Set common trainer configs
 # -----------------------------------------------------------------------------
+
+## Loss Optimizer
+th.loss_prop = 11.0
+optimizer = Optimizer(th.loss_prop)
+# th.validate_cycle = 20
+#
 th.num_steps = -1
 th.print_cycle = 5
 th.sample_num = 2
@@ -80,6 +88,8 @@ th.eval_batch_size = 20
 
 
 def activate():
+  from eeg.eeg_agent import EEG
+
   # This line must be put in activate
   assert callable(th.model)
   if 'rnn' in th.developer_code:
@@ -98,8 +108,14 @@ def activate():
   if th.train:
     model.train(train_set, validation_set=val_set, test_set=test_set, trainer_hub=th)
   else:
-    pass
-    
+    ## Evaluate on test set
+    calibrated_signal = model.predict(data=test_set)
+    original_signal = test_set.features
+    reference_signal = test_set.targets
+    ep.siganl_visualize(reference_data=reference_signal,
+                        original_data=original_signal,
+                        calibrated_data=calibrated_signal)
+
   # End
   model.shutdown()
   console.end()

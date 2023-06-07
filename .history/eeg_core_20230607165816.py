@@ -55,6 +55,8 @@ th.size = 46200
 # -----------------------------------------------------------------------------
 # Set common trainer configs
 # -----------------------------------------------------------------------------
+
+#
 th.num_steps = -1
 th.print_cycle = 5
 th.sample_num = 2
@@ -80,6 +82,8 @@ th.eval_batch_size = 20
 
 
 def activate():
+  from eeg.eeg_agent import EEG
+
   # This line must be put in activate
   assert callable(th.model)
   if 'rnn' in th.developer_code:
