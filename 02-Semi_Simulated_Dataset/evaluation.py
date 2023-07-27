@@ -1,8 +1,8 @@
 import os, sys
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit')
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit/roma')
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit/pictor')
-sys.path.append('/Software/summer/eeg-denoise-alpha')
+sys.path.append('../xai-kit')
+sys.path.append('../xai-kit/roma')
+sys.path.append('../xai-kit/pictor')
+sys.path.append('../')
 
 import tensorflow as tf
 import matplotlib.pyplot as plt

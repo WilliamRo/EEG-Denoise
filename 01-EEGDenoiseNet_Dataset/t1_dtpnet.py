@@ -1,9 +1,9 @@
 import sys, os 
 from tkinter.tix import Tree
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit')
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit/roma')
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit/pictor')
-sys.path.append('/Software/summer/eeg-denoise-alpha')
+sys.path.append('../xai-kit')
+sys.path.append('../xai-kit/roma')
+sys.path.append('../xai-kit/pictor')
+sys.path.append('../')
 
 from tframe import tf
 from tframe import console

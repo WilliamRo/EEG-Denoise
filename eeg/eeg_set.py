@@ -1,5 +1,4 @@
 import os, sys
-sys.path.append('/Software/summer/xai-alfa')
 
 from tframe.data.sequences.seq_set import SequenceSet
 from eeg.eegviewer import EEGViewer

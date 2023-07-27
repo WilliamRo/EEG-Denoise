@@ -3,8 +3,6 @@ from __future__ import division
 from __future__ import print_function
 
 import os, sys
-sys.path.append('/Software/summer/xai-alfa')
-sys.path.append('/Software/summer/xai-alfa/54-EEG')
 import numpy as np
 import math
 

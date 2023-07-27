@@ -1,7 +1,7 @@
 import os, sys
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit')
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit/roma')
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit/pictor')
+sys.path.append('../xai-kit/roma')
+sys.path.append('../xai-kit/pictor')
+sys.path.append('../')
 from importlib.machinery import SourceFileLoader
 from eeg_core import th
 from eeg.eeg_set import EEGSet
