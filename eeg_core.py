@@ -24,12 +24,9 @@ for _ in range(DIR_DEPTH):
 # =============================================================================
 from tframe import console
 from eeg.eeg_config import EEGConfig as Hub
-from tframe import Classifier
 from tframe import Predictor
-
-from tframe.configs.config_base import Config
 import eeg_du as du
-from tframe import DataSet
+
 
 
 # -----------------------------------------------------------------------------
@@ -89,16 +86,21 @@ def activate():
   assert isinstance(model, Predictor)
 
   # Load data
-  train_set, val_set, test_set = du.load(th.data_dir, th.train_per,
-                                         th.combin_num, th.noise_type,
-                                         th.size)
+  train_set, val_set, test_set = du.load(th.data_dir, th.train_per, th.noise_type)
 
 
   # Train or evaluate
   if th.train:
     model.train(train_set, validation_set=val_set, test_set=test_set, trainer_hub=th)
   else:
-    pass
+    from eeg.eeg_util import siganl_visualize
+    ## Evaluate on test set
+    calibrated_signal = model.predict(data=test_set)
+    original_signal = test_set.features
+    reference_signal = test_set.targets
+    siganl_visualize(reference_data=reference_signal,
+                        original_data=original_signal,
+                        calibrated_data=calibrated_signal)
     
   # End
   model.shutdown()
