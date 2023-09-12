@@ -1,5 +1,5 @@
 import sys, os
-sys.path.append('xai-kit/')
+sys.path.append('../xai-kit')
 #: Add necessary paths to system path list so that all task modules with
 #:  filename `tXX_YYY.py` can be run directly.
 #:
