@@ -1,8 +1,8 @@
 import os, sys
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit')
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit/roma')
-sys.path.append('/Software/summer/eeg-denoise-alpha/xai-kit/pictor')
-sys.path.append('/Software/summer/eeg-denoise-alpha')
+sys.path.append('../xai-kit')
+sys.path.append('../xai-kit/roma')
+sys.path.append('../xai-kit/pictor')
+sys.path.append('../')
 
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -11,16 +11,23 @@ import eeg.eval as metric
 from importlib.machinery import SourceFileLoader
 from eeg_core import th
 from eeg.eeg_set import EEGSet
+import argparse
 
 
 
+def add_arguments(parser):
+    parser.add_argument('--plot_type', choices=['metric_report', 'denoise_visualize', 'denoise_visualize_multi_channel'], default='result_SNR', help='Plot Result Type')
+
+    return parser
+    
+    
 def model_performance(features, clean): 
     ## load proposed method
     module_path = os.path.join(os.getcwd(), 'checkpoints/0609_semi_simulated_model/0609_semi_simulated_model.py')
     task_module = SourceFileLoader('task', module_path).load_module()
     task_module.main('*')
     th.prefix = '0609_'
-    th.visible_gpu_id = 0
+    th.visible_gpu_id = 1
     th.overwrite = False
     model = th.model()
     ## predict
@@ -85,14 +92,14 @@ def signal_visualize_single_channel(features, clean):
     plt.show()
 
     
-def signal_visualize_multi_channel(features, clean):
+def signal_visualize_multi_channel(feature, clean):
     shape = feature.shape
     module_path = os.path.join(os.getcwd(), 'checkpoints/0609_semi_simulated_model/0609_semi_simulated_model.py')
     task_module = SourceFileLoader('task', module_path).load_module()
     task_module.main('*')
     th.prefix = '0609_'
     th.overwrite = False
-    th.visible_gpu_id = 0
+    th.visible_gpu_id = 1
     model = th.model()
     feature = feature.reshape(-1, 540)
     feature = np.expand_dims(feature, axis=2)
@@ -101,7 +108,7 @@ def signal_visualize_multi_channel(features, clean):
     feature = feature.reshape(shape)
 
     ## plot multi-channel, choose the first people
-    feature, target, proposed_denoise = feature[10], target[10], proposed_denoise[10]
+    feature, target, proposed_denoise = feature[10], clean[10], proposed_denoise[10]
     xticks = np.arange(1000) /200
     for i in range(19):
         plt.plot(xticks, feature[i][2000:3000]+150*i, color='#808080', alpha=0.5)
@@ -113,7 +120,7 @@ def signal_visualize_multi_channel(features, clean):
  
 
 
-def signal_psd(data_in, fs, noise_type):
+def signal_psd(data_in, fs):
     from scipy import signal as sig
     fft_length = 600
     f, pxx = sig.welch(data_in, fs, nfft=fft_length, nperseg=fft_length)
@@ -122,6 +129,19 @@ def signal_psd(data_in, fs, noise_type):
 
  
 if __name__=='__main__':
-    feature = np.load(os.path.join(os.getcwd(), 'test_data/signal_Semi-simulated EOG.npy'), allow_pickle=True)
-    clean = np.load(os.path.join(os.getcwd(),'test_data/reference_Semi-simulated EOG.npy'), allow_pickle=True)
-    model_performance(feature, clean) 
+    parser = argparse.ArgumentParser(help)
+    add_arguments(parser)
+    args = parser.parse_args()
+
+    plot_type = args.plot_type
+
+    feature = np.load(os.path.abspath(os.path.join(os.getcwd(), '../EEG-Denoise_Database/02-Semi_Simulated_Dataset/signal_Semi-simulated EOG.npy')), allow_pickle=True)
+    clean = np.load(os.path.abspath(os.path.join(os.getcwd(), '../EEG-Denoise_Database/02-Semi_Simulated_Dataset/reference_Semi-simulated EOG.npy')), allow_pickle=True)
+    if plot_type == 'metric_report':
+        model_performance(feature, clean) 
+    elif plot_type == 'denoise_visualize': 
+        signal_visualize_single_channel(feature, clean)
+    elif plot_type == 'denoise_visualize_multi_channel':
+        signal_visualize_multi_channel(feature, clean)
+    else:
+        AssertionError('Plot Type Error!!!')
