@@ -10,6 +10,8 @@ class EEGConfig(SmartTrainerHub):
 
   noise_type = Flag.string('EOG', 'Noise Type used in task', is_key=None)
 
+  plot_type = Flag.string('metric_report', 'Plot Result Type', is_key=None)
+
   dataset = Flag.string('eegdenoisenet', 'Dataset used in task', is_key=None)
 
   train_per = Flag.float(0.8, 'The proportion of the training data in the total data',
