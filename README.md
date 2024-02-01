@@ -100,5 +100,19 @@ Run this script to get the ERP classification performance of data denoised by DT
 cd 03-MNE_MEG_EEG_Dataset
 python erp.py --denoise
 ```
+## Citation
+'''
+@article{Pei2024,
+  title = {DTP-Net: Learning to Reconstruct EEG Signals in Time-Frequency Domain by Multi-scale Feature Reuse},
+  ISSN = {2168-2208},
+  url = {http://dx.doi.org/10.1109/JBHI.2024.3358917},
+  DOI = {10.1109/jbhi.2024.3358917},
+  journal = {IEEE Journal of Biomedical and Health Informatics},
+  publisher = {Institute of Electrical and Electronics Engineers (IEEE)},
+  author = {Pei,  Yan and Xu,  Jiahui and Chen,  Qianhao and Wang,  Chenhao and Yu,  Feng and Zhang,  Lisan and Luo,  Wei},
+  year = {2024},
+  pages = {1–12}
+}
+'''
 ## Licence
 For academic and non-commercial use only.
