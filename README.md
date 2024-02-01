@@ -101,7 +101,6 @@ cd 03-MNE_MEG_EEG_Dataset
 python erp.py --denoise
 ```
 ## Citation
-'''
 @article{Pei2024,
   title = {DTP-Net: Learning to Reconstruct EEG Signals in Time-Frequency Domain by Multi-scale Feature Reuse},
   ISSN = {2168-2208},
@@ -113,6 +112,5 @@ python erp.py --denoise
   year = {2024},
   pages = {1–12}
 }
-'''
 ## Licence
 For academic and non-commercial use only.
