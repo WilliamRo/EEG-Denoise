@@ -1,3 +1,0 @@
-model_checkpoint_path: "//Software/summer/xai-alfa/54-EEG/01_mod_tasnet/checkpoints/0609_mod_tasnet_relu_mse_11.0_EMG_GAN_Sc_base+tpb+dense/forward.predictor(125.000_rounds)-train-175000"
-all_model_checkpoint_paths: "//Software/summer/xai-alfa/54-EEG/01_mod_tasnet/checkpoints/0609_mod_tasnet_relu_mse_11.0_EMG_GAN_Sc_base+tpb+dense/forward.predictor(111.000_rounds)-train-155400"
-all_model_checkpoint_paths: "//Software/summer/xai-alfa/54-EEG/01_mod_tasnet/checkpoints/0609_mod_tasnet_relu_mse_11.0_EMG_GAN_Sc_base+tpb+dense/forward.predictor(125.000_rounds)-train-175000"
