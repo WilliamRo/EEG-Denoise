@@ -43,7 +43,11 @@ python t1_dtpnet.py --noise_type EOG
 ```
 ```noise_type``` denotes different artifacts source, including ```EMG```, ```EOG``` and ```EMG_EOG```.
 
-The pre-trained models are saved in ```01-EEGDenoiseNet_Dataset/checkpoints```
+The pre-trained models are saved in [G-node database](https://gin.g-node.org/SummerBae/EEG-Denoise_Database/src/master/01-EEGDenoiseNet_checkpoints/checkpoints) and you can run the following scripts to download checkpoints.
+```
+gin get SummerBae/EEG-Denoise_Database
+```
+Download the checkpints and save the checkpoints files ```SummerBae/EEG-Denoise_Database/01-EEGDenoiseNet_checkpoints/checkpoints``` in ```EEG-Denoise/01-EEGDenoiseNet_Dataset/```.
 
 Run this script to evaluate the denoise performance at different SNR levels of pre-trained models:
 ```
@@ -65,8 +69,11 @@ Run this script to train a DTP-Net for model deployment II:
 cd 02-Semi_Simulated_Dataset
 python t2_dtpnet.py
 ```
-
-The pre-trained models are saved in ```02-Semi_Simulated_Dataset/checkpoints```
+The pre-trained models are saved in [G-node database](https://gin.g-node.org/SummerBae/EEG-Denoise_Database/src/master/01-EEGDenoiseNet_checkpoints/checkpoints) and you can run the following scripts to download checkpoints.
+```
+gin get SummerBae/EEG-Denoise_Database
+```
+Download the checkpints and save the checkpoints files ```SummerBae/EEG-Denoise_Database/02-Semi_Simulated_checkpoints/checkpoints``` in ```EEG-Denoise/02-Semi_Simulated_Dataset/```.
 
 Run this script to evaluate the denoise performance of pre-trained models:
 ```
@@ -80,7 +87,6 @@ cd 02-Semi_Simulated_Dataset
 python evaluation.py --plot_type denoise_visualize
 ```
 ![Denoise waveform results and PSD results after artifacts removal](https://github.com/WilliamRo/EEG-Denoise/blob/main/figure/experiment_2_1.png)
-
 
 Run this script to get multi-channel waveform results for eliminating artifacts of pre-trained models:
 ```
