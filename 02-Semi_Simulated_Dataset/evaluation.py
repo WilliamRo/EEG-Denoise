@@ -83,6 +83,38 @@ def model_performance(features, clean):
     print('Delta SNR->{}'.format(np.mean(snr)))
 
 
+def model_performance_test(features, clean): 
+    ## get the test channel
+    features = features[:, 0, :]
+    clean = clean[:, 0, :]
+    ## load proposed method
+    module_path = os.path.join(os.getcwd(), 'checkpoints/0609_semi_simulated_model/0609_semi_simulated_model.py')
+    task_module = SourceFileLoader('task', module_path).load_module()
+    task_module.main('*')
+    th.prefix = '0609_'
+    th.visible_gpu_id = 1
+    th.overwrite = False
+    model = th.model()
+    ## predict
+    feature = features.reshape(-1, 540)
+    feature = np.expand_dims(feature, axis=2)
+    proposed_denoise = model.predict(EEGSet(feature), batch_size=32)
+    proposed_denoise = proposed_denoise.reshape(-1, 5400)
+    ## get metric
+    ground_truth = clean.reshape(-1, 5400)
+    data = np.stack((ground_truth, proposed_denoise))
+    rrmse_t = metric.rrmse_temporal_metric(data)
+    rrmse_s = metric.rrmse_spectral_metric(data, fs=200)
+    cc = metric.correlation_coefficient_metric(data)
+    snr = metric.snr_metric(data)
+
+    ## Print the Performance Metric
+    print('RRMSE_t->{}'.format(np.mean(rrmse_t)))
+    print('RRMSE_s->{}'.format(np.mean(rrmse_s)))
+    print('CC->{}'.format(np.mean(cc)))
+    print('Delta SNR->{}'.format(np.mean(snr)))
+
+
 def signal_visualize_single_channel(features, clean):
     ## load proposed method
     module_path = os.path.join(os.getcwd(), 'checkpoints/0609_semi_simulated_model/0609_semi_simulated_model.py')
@@ -170,8 +202,10 @@ if __name__=='__main__':
 
     feature = np.load(os.path.abspath(os.path.join(os.getcwd(), '../EEG-Denoise_Database/02-Semi_Simulated_Dataset/signal_Semi-simulated EOG.npy')), allow_pickle=True)
     clean = np.load(os.path.abspath(os.path.join(os.getcwd(), '../EEG-Denoise_Database/02-Semi_Simulated_Dataset/reference_Semi-simulated EOG.npy')), allow_pickle=True)
-    if plot_type == 'metric_report':
+    if plot_type == 'metric_report_wqn':
         model_performance(feature, clean) 
+    elif plot_type == 'metric_report_test':
+        model_performance_test(feature, clean) 
     elif plot_type == 'denoise_visualize': 
         signal_visualize_single_channel(feature, clean)
     elif plot_type == 'denoise_visualize_multi_channel':
