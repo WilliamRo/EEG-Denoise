@@ -78,7 +78,7 @@ Download the checkpints and save the checkpoints files ```SummerBae/EEG-Denoise_
 Run this script to evaluate the denoise performance of pre-trained models:
 ```
 cd 02-Semi_Simulated_Dataset
-python evaluation.py --plot_type metric_report
+python evaluation.py --plot_type metric_report_wqn
 ```
 
 Run this script to get waveform results and PSD results for eliminating artifacts of pre-trained models:

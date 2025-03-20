@@ -1,3 +1,36 @@
+"""USAGE of this script
+
+(1) To calculating metrics (e.g., RRMSE_t and CC) of the proposed network, set '--plot_type' to 'metric_report_wqn', 'metric_report_test'.
+    - 'metric_report_wqn': evaluate model using WQN-style framework [1]
+      For reference, we provide the comparison results of different models under 'metric_report_wqn' setting (reported in our paper)
+        ---------------------------------------------------------------------------
+        Metrics        1D-ResCNN    SimpleCNN    NovelCNN     WQN          Ours
+        ===========================================================================
+        RRMSE_t        0.300        0.270        0.168        0.265        0.0563
+        RRMSE_s        0.785        0.719        0.185        0.513        0.0747
+        Delta_SNR      12.3         13.1         13.6         12.7         29.3
+        CC             0.946        0.955        0.980        0.956        0.995
+        ---------------------------------------------------------------------------
+
+    - 'metric_report_test': evaluate model on test set
+      For reference, we provide the comparison results of different models under 'metric_report_test' setting
+        ---------------------------------------------------------------------------
+        Metrics        1D-ResCNN    SimpleCNN    NovelCNN     WQN          Ours
+        ===========================================================================
+        RRMSE_t        0.710        0.798        0.458        0.474        0.289
+        RRMSE_s        1.22         1.55         0.481        0.769        0.457
+        Delta_SNR      3.62         2.72         7.13         6.71         11.4
+        CC             0.808        0.780        0.887        0.881        0.953
+        ---------------------------------------------------------------------------
+
+(2) To visualize the denoise result, set '--plot_type' to 'denoise_visualize', 'denoise_visualize_multi_channel'.
+    - 'denoise_visualize': for single channel visualization
+    - 'denoise_visualize_multi_channel': for multi-channel visualization
+
+Reference
+---------
+[1] M. Dora and D. Holcman, “Adaptive single-channel EEG artifact removal with applications to clinical monitoring,” IEEE Trans. Neural Syst. Rehabil. Eng., vol. 30, pp. 286–295, 2022.
+"""
 import os, sys
 sys.path.append('../xai-kit')
 sys.path.append('../xai-kit/roma')
@@ -16,7 +49,7 @@ import argparse
 
 
 def add_arguments(parser):
-    parser.add_argument('--plot_type', choices=['metric_report', 'denoise_visualize', 'denoise_visualize_multi_channel'], default='result_SNR', help='Plot Result Type')
+    parser.add_argument('--plot_type', choices=['metric_report_wqn', 'metric_report_test', 'denoise_visualize', 'denoise_visualize_multi_channel'], default='result_SNR', help='Plot Result Type')
 
     return parser
     
