@@ -167,18 +167,15 @@ class EEG(DataAgent):
 
   @classmethod
   def _signal_preproc_semi_simulated(cls, data_type):
-    contaminated_signal = np.load('/Software/summer/xai-alfa/54-EEG/eeg/semi_simulated/signal_Semi-simulated EOG.npy', allow_pickle=True)
-    ground_truth = np.load('/Software/summer/xai-alfa/54-EEG/eeg/semi_simulated/reference_Semi-simulated EOG.npy', allow_pickle=True)
-    data_type = 'train'
     if data_type == 'test':
-      eeg_data = ground_truth[:, 0, :] 
-      noise_data = contaminated_signal[:, 0, :] 
+      eeg_data = np.load('semi_simulated/test_reference.npy', allow_pickle=True)
+      noise_data = np.load('semi_simulated/test_input.npy', allow_pickle=True)
     elif data_type == 'val':
-      eeg_data = ground_truth[:, 1, :] 
-      noise_data = contaminated_signal[:, 1, :] 
+      eeg_data = np.load('semi_simulated/val_reference.npy', allow_pickle=True)
+      noise_data = np.load('semi_simulated/val_input.npy', allow_pickle=True)
     elif data_type == 'train':
-      eeg_data = ground_truth[:, 2:, :] 
-      noise_data = contaminated_signal[:, 2:, :] 
+      eeg_data = np.load('semi_simulated/train_reference.npy', allow_pickle=True)
+      noise_data = np.load('semi_simulated/train_input.npy', allow_pickle=True)
     
     eeg_data = np.array(eeg_data).reshape((-1, 540))
     noise_data = np.array(noise_data).reshape((-1, 540))
